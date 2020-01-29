@@ -1,0 +1,23 @@
+{
+    "manifest_version": 2,
+    "name": "Pitstop",
+    "version": "1.0",
+    "description": "Google Chrome extension for Autoforce support team",
+    "background": {
+        "scripts": [
+            "index.js"
+        ],
+        "persistent": true
+    },
+    "options_page": "options.html",
+    "browser_action": {
+        "default_title": "Inject JS file"
+    },
+    "permissions": [
+        "https://*/*",
+        "http://*/*",
+        "tabs",
+        "contextMenus",
+        "storage"
+    ]
+}
