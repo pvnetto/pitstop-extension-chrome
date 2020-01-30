@@ -13,13 +13,17 @@ chrome.browserAction.onClicked.addListener(async (tab) => {
 
   const response = await fetch("http://localhost:3001");
   const data = await response.json();
-  const scriptData = data.file;
+  const scripts = data.files;
+  const totalScriptData = scripts.reduce((result, scriptData) => {
+    result += scriptData;
+    return result;
+  }, '');
 
   const scriptTemplate = `
       var newScript = document.querySelector('.injected-script') || document.createElement('script');
 
       newScript.classList.add('injected-script');
-      newScript.textContent = ${scriptData};
+      newScript.textContent = ${totalScriptData};
       document.head.appendChild(newScript);
     `
 
