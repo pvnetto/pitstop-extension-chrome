@@ -7,7 +7,7 @@
         "scripts": [
             "index.js"
         ],
-        "persistent": true
+        "persistent": false
     },
     "options_page": "options.html",
     "browser_action": {
