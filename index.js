@@ -1,3 +1,10 @@
+const reduceArrToString = (arr) => {
+  return arr.reduce((result, data) => {
+    result += data;
+    return result;
+  }, '');
+}
+
 // Creates an item on chrome's context menu
 chrome.contextMenus.create({
   title: "This is a custom context button",
@@ -13,17 +20,14 @@ chrome.browserAction.onClicked.addListener(async (tab) => {
 
   const response = await fetch("http://localhost:3001");
   const data = await response.json();
-  const scripts = data.files;
-  const totalScriptData = scripts.reduce((result, scriptData) => {
-    result += scriptData;
-    return result;
-  }, '');
+  const scriptData = reduceArrToString(data.files.js);
+  const cssData = reduceArrToString(data.files.css);
 
   const scriptTemplate = `
       var newScript = document.querySelector('.injected-script') || document.createElement('script');
 
       newScript.classList.add('injected-script');
-      newScript.textContent = ${totalScriptData};
+      newScript.textContent = ${scriptData};
       document.head.appendChild(newScript);
     `
 
@@ -31,5 +35,11 @@ chrome.browserAction.onClicked.addListener(async (tab) => {
   chrome.tabs.executeScript(tab.id, {
     code: scriptTemplate
   });
+
+
+  chrome.tabs.insertCSS(tab.id, {
+    code: cssData
+  });
+
 
 });
