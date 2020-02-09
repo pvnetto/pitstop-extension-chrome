@@ -17,6 +17,7 @@
         "https://*/*",
         "http://*/*",
         "tabs",
+        "activeTab",
         "contextMenus",
         "storage"
     ]
