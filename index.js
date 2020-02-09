@@ -6,21 +6,19 @@ const reduceArrToString = (arr) => {
 }
 
 const fillForm = (info, tab) => {
-  console.log(info);
+  chrome.tabs.executeScript(tab.id, { file: 'libs/faker.pt_BR.min.js', }, () => {
+    chrome.tabs.executeScript(tab.id, {
+      file: 'actions/fill-form.js',
+    });
+  });
 }
 
 // Creates an item on chrome's context menu
 chrome.contextMenus.create({
   id: 'fill_form_btn',
-  title: "Fill form",
-  // onclick: fillForm,
+  title: "Preencher formulário",
   contexts: ['page'],
-  // contexts: ["browser_action"]
-},
-  () => {
-    console.log("created btn");
-  }
-);
+});
 
 chrome.contextMenus.onClicked.addListener(fillForm)
 
@@ -35,23 +33,19 @@ chrome.browserAction.onClicked.addListener(async (tab) => {
   const scriptTemplate = `
       var newScript = document.querySelector('.injected-script') || document.createElement('script');
       newScript.classList.add('injected-script');
-      // newScript.setAttribute('src', file);
-      newScript.setAttribute('type', 'text/javascript');
       newScript.textContent = ${scriptData};
 
       document.head.appendChild(newScript);`;
 
-  // https://stackoverflow.com/questions/26491360/chrome-extension-executescript-on-tab
-  chrome.tabs.executeScript(tab.id, { file: 'jquery-3.4.1.min.js' }, () => {
+
+  chrome.tabs.executeScript(tab.id, { file: 'libs/jquery-3.4.1.min.js' }, () => {
     chrome.tabs.executeScript(tab.id, {
       code: scriptTemplate,
     });
-  })
-
+  });
 
   chrome.tabs.insertCSS(tab.id, {
     code: cssData
   });
-
 
 });
