@@ -5,11 +5,17 @@ const reduceArrToString = (arr) => {
   }, '');
 }
 
-const fillForm = (info, tab) => {
+const executeDependencies = (tab, callback) => {
   chrome.tabs.executeScript(tab.id, { file: 'libs/faker.pt_BR.min.js', }, () => {
+    chrome.tabs.executeScript(tab.id, { file: 'libs/pitstop-0.0.3.js' }, callback);
+  });
+}
+
+const fillForm = (info, tab) => {
+  executeDependencies(tab, () => {
     chrome.tabs.executeScript(tab.id, {
       file: 'actions/fill-form.js',
-    });
+    })
   });
 }
 
@@ -23,7 +29,6 @@ chrome.contextMenus.create({
 chrome.contextMenus.onClicked.addListener(fillForm)
 
 chrome.browserAction.onClicked.addListener(async (tab) => {
-  // TODO: Add port/relative path configs, so files are always fetched from localhost:port/path
 
   const response = await fetch("http://localhost:3001");
   const data = await response.json();
@@ -38,11 +43,11 @@ chrome.browserAction.onClicked.addListener(async (tab) => {
       document.head.appendChild(newScript);`;
 
 
-  chrome.tabs.executeScript(tab.id, { file: 'libs/jquery-3.4.1.min.js' }, () => {
+  executeDependencies(tab, () => {
     chrome.tabs.executeScript(tab.id, {
       code: scriptTemplate,
     });
-  });
+  })
 
   chrome.tabs.insertCSS(tab.id, {
     code: cssData
