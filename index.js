@@ -6,16 +6,16 @@ const reduceArrToString = (arr) => {
 }
 
 const executeDependencies = (tab, callback) => {
-  chrome.tabs.executeScript(tab.id, { file: 'libs/faker.pt_BR.min.js', }, () => {
+  chrome.tabs.executeScript(tab.id, { file: 'libs/jquery-3.4.1.min.js', }, () => {
     chrome.tabs.executeScript(tab.id, { file: 'libs/pitstop-0.0.3.js' }, callback);
   });
 }
 
 const fillForm = (info, tab) => {
   executeDependencies(tab, () => {
-    chrome.tabs.executeScript(tab.id, {
-      file: 'actions/fill-form.js',
-    })
+    chrome.tabs.executeScript(tab.id, { file: 'libs/faker.pt_BR.min.js', }, () => {
+      chrome.tabs.executeScript(tab.id, { file: 'actions/fill-form.js' });
+    });
   });
 }
 
@@ -44,10 +44,8 @@ chrome.browserAction.onClicked.addListener(async (tab) => {
 
 
   executeDependencies(tab, () => {
-    chrome.tabs.executeScript(tab.id, {
-      code: scriptTemplate,
-    });
-  })
+    chrome.tabs.executeScript(tab.id, { code: scriptTemplate });
+  });
 
   chrome.tabs.insertCSS(tab.id, {
     code: cssData

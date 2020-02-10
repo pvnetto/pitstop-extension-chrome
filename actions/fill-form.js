@@ -6,7 +6,7 @@
             if (field.name.includes('cpf')) return 'cpf';
             if (field.name.includes('name')) return 'name';
             if (field.name.includes('last') || field.name.includes('last_name')) return 'last_name';
-            if (field.name.includes('phone')) return 'phone';
+            if (field.name.includes('phone') || field.name.includes('tel')) return 'phone';
         }
         return field.type;
     }
