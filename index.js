@@ -11,13 +11,24 @@ const executeDependencies = (tab, callback) => {
   });
 }
 
-const fillForm = (info, tab) => {
+const fillForm = (tab) => {
   executeDependencies(tab, () => {
     chrome.tabs.executeScript(tab.id, { file: 'libs/faker.pt_BR.min.js', }, () => {
       chrome.tabs.executeScript(tab.id, { file: 'actions/fill-form.js' });
     });
   });
 }
+
+const checkStock = (tab) => {
+  chrome.tabs.executeScript(tab.id, { file: 'actions/check-stock.js' });
+}
+
+const handleContextClick = (info, tab) => {
+  const { menuItemId } = info;
+  if (menuItemId === 'fill_form_btn') fillForm(tab);
+  else if (menuItemId === 'check_stock_btn') checkStock(tab);
+}
+
 
 // Creates an item on chrome's context menu
 chrome.contextMenus.create({
@@ -26,7 +37,14 @@ chrome.contextMenus.create({
   contexts: ['page'],
 });
 
-chrome.contextMenus.onClicked.addListener(fillForm)
+// Creates an item on chrome's context menu
+chrome.contextMenus.create({
+  id: 'check_stock_btn',
+  title: "Conferir estoque",
+  contexts: ['page'],
+});
+
+chrome.contextMenus.onClicked.addListener(handleContextClick)
 
 chrome.browserAction.onClicked.addListener(async (tab) => {
 

@@ -2,12 +2,10 @@
     // faker.setLocale("pt_BR");
 
     const getType = (field) => {
-        if (field.type === 'text') {
-            if (field.name.includes('cpf')) return 'cpf';
-            if (field.name.includes('name')) return 'name';
-            if (field.name.includes('last') || field.name.includes('last_name')) return 'last_name';
-            if (field.name.includes('phone') || field.name.includes('tel')) return 'phone';
-        }
+        if (field.name.includes('cpf')) return 'cpf';
+        if (field.name.includes('name')) return 'name';
+        if (field.name.includes('last') || field.name.includes('last_name')) return 'last_name';
+        if (field.name.includes('phone') || field.name.includes('tel')) return 'phone';
         return field.type;
     }
 
@@ -18,11 +16,11 @@
     }
 
     const info = {
-        'name': faker.name.findName,
+        'name': () => `Autoforce Teste - ${faker.name.findName()}`,
         'last_name': faker.name.lastName,
         'cpf': generateCPF,
-        'phone': () => faker.phone.phoneNumber('(##)9####-####'),
-        'email': faker.internet.email,
+        'phone': () => faker.phone.phoneNumber('(00)9####-####'),
+        'email': () => `teste-${faker.random.number({ min: 100000, max: 999999 })}@autoforce.com`,
         'text': faker.lorem.word,
     }
 
