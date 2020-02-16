@@ -44,6 +44,16 @@ chrome.contextMenus.create({
   contexts: ['page'],
 });
 
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  console.log(changeInfo);
+  if (changeInfo.status && changeInfo.status === 'complete') {
+    chrome.tabs.executeScript(tabId, { file: 'helpers/selection.js' });
+  }
+  // if ((tab.url.indexOf("http://www.facebook.com/") != -1 || tab.url.indexOf("https://www.facebook.com/") != -1) && changeInfo.status === 'complete') {
+  //   chrome.tabs.executeScript(tabId, { file: "js/fbh-main.js" });
+  // }
+});
+
 chrome.contextMenus.onClicked.addListener(handleContextClick)
 
 chrome.browserAction.onClicked.addListener(async (tab) => {

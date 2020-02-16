@@ -29,8 +29,9 @@
         const fieldInfo = info[fieldType] ? info[fieldType]() : '';
         field.value = fieldInfo;
     }
-    const hoveredElements = document.querySelectorAll(':hover');
-    const hoveredForm = [...hoveredElements].find(item => item.tagName.toLowerCase() === 'form');
+
+    // const hoveredElements = document.querySelectorAll(':hover');
+    const hoveredForm = [...solSelection.rightClicked].find(item => item.tagName.toLowerCase() === 'form');
 
     if (hoveredForm) {
         const fields = hoveredForm.querySelectorAll('input');
