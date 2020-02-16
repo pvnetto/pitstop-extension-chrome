@@ -34,17 +34,18 @@ const handleContextClick = (info, tab) => {
 chrome.contextMenus.create({
   id: 'fill_form_btn',
   title: "Preencher formulário",
-  contexts: ['page'],
+  contexts: ['page', 'selection', 'link', 'editable'],
 });
 
 // Creates an item on chrome's context menu
 chrome.contextMenus.create({
   id: 'check_stock_btn',
   title: "Conferir estoque",
-  contexts: ['page'],
+  contexts: ['page', 'selection', 'link', 'editable'],
 });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  console.log(changeInfo);
   if (changeInfo.status && changeInfo.status === 'complete') {
     chrome.tabs.executeScript(tabId, { file: 'helpers/selection.js' });
   }
