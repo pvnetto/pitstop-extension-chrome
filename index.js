@@ -5,11 +5,13 @@ const reduceArrToString = (arr) => {
   }, '');
 }
 
+
 const executeDependencies = (tab, callback) => {
   chrome.tabs.executeScript(tab.id, { file: 'libs/jquery-3.4.1.min.js', }, () => {
-    chrome.tabs.executeScript(tab.id, { file: 'libs/pitstop-0.0.3.js' }, callback);
+    chrome.tabs.executeScript(tab.id, { file: 'libs/pitstop-0.0.4.js' }, callback);
   });
 }
+
 
 const fillForm = (tab) => {
   executeDependencies(tab, () => {
@@ -44,12 +46,14 @@ chrome.contextMenus.create({
   contexts: ['page', 'selection', 'link', 'editable'],
 });
 
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   console.log(changeInfo);
   if (changeInfo.status && changeInfo.status === 'complete') {
     chrome.tabs.executeScript(tabId, { file: 'helpers/selection.js' });
   }
 });
+
 
 chrome.contextMenus.onClicked.addListener(handleContextClick)
 

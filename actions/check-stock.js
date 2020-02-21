@@ -1,32 +1,32 @@
-// (() => {
+(() => {
 
-//     const fetchStock = (cnpj) => {
-//         const body = {
-//             Email: 'suporte@autoforce.com.br',
-//             Senha: '@utF.9971',
-//             CNPJ: '03.935.677/0001-00',
-//             Tipo: 'Usado',
-//             Publicado: 'S',
-//             Hash: 'S'
-//         };
+    const fetchStock = async (cnpj) => {
+        const response = await fetch("http://localhost:3001/stock", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ cnpj })
+        });
+        const stockData = await response.json();
 
-//         fetch('https://adset.com.br/integrador/api/estoqueveiculos', { method: 'POST', body: JSON.stringify(body) })
-//             .then(res => console.log(res))
-//             .catch(err => console.log(err));
-//     }
+        console.log(stockData);
+        return stockData;
+    }
 
-//     const checkStock = () => {
-//         const totalText = document.querySelector('.panel .panel-body p');
-//         let total = totalText.childNodes[1].textContent;
-//         total = parseInt(total);
+    const checkStock = async () => {
+        const totalText = document.querySelector('.panel .panel-body p');
+        let total = totalText.childNodes[1].textContent;
+        total = parseInt(total);
 
-//         const breadcrumbItems = document.querySelectorAll('.breadcrumb li');
-//         const cnpjItem = [...breadcrumbItems].find(item => item.textContent.includes('0001'));
-//         const cnpj = cnpjItem.textContent;
+        const breadcrumbItems = document.querySelectorAll('.breadcrumb li');
+        const cnpjItem = [...breadcrumbItems].find(item => item.textContent.includes('0001'));
+        const cnpj = cnpjItem.textContent;
 
-//         fetchStock(cnpj);
-//     }
+        fetchStock(cnpj);
+    }
 
-//     checkStock();
+    checkStock();
 
-// })();
+})();
