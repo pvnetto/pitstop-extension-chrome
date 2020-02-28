@@ -1,5 +1,4 @@
 (() => {
-
     const fetchStock = async (cnpj) => {
         const response = await fetch("http://localhost:3001/stock", {
             headers: {
@@ -28,5 +27,4 @@
     }
 
     checkStock();
-
 })();
