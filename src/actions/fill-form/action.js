@@ -1,6 +1,6 @@
-(() => {
-    // faker.setLocale("pt_BR");
 
+// Actions are injected to pages by types
+(() => {
     const getType = (field) => {
         if (field.name.includes('cpf')) return 'cpf';
         if (field.name.includes('name')) return 'name';
@@ -30,7 +30,6 @@
         field.value = fieldInfo;
     }
 
-    // const hoveredElements = document.querySelectorAll(':hover');
     const hoveredForm = [...solSelection.rightClicked].find(item => item.tagName.toLowerCase() === 'form');
 
     if (hoveredForm) {
