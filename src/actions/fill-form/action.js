@@ -30,7 +30,9 @@
         field.value = fieldInfo;
     }
 
-    const hoveredForm = [...solSelection.rightClicked].find(item => item.tagName.toLowerCase() === 'form');
+    // Assumes selection.js was injected, so $_selection can be accessed to find out which
+    // item was being hovered when the menu item was clicked
+    const hoveredForm = [...$_selection.rightClicked].find(item => item.tagName.toLowerCase() === 'form');
 
     if (hoveredForm) {
         const fields = hoveredForm.querySelectorAll('input');
