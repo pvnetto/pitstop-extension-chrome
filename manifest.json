@@ -5,7 +5,7 @@
     "description": "Google Chrome extension for Autoforce support team",
     "background": {
         "scripts": [
-            "index.js"
+            "dist/index.js"
         ],
         "persistent": false
     },

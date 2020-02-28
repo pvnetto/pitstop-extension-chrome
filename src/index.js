@@ -1,15 +1,10 @@
+import { executeDependencies } from './helpers/execute-dependencies';
+
 const reduceArrToString = (arr) => {
   return arr.reduce((result, data) => {
     result += data;
     return result;
   }, '');
-}
-
-
-const executeDependencies = (tab, callback) => {
-  chrome.tabs.executeScript(tab.id, { file: 'libs/jquery-3.4.1.min.js', }, () => {
-    chrome.tabs.executeScript(tab.id, { file: 'libs/pitstop-0.0.4.js' }, callback);
-  });
 }
 
 
