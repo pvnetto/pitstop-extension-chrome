@@ -8,8 +8,8 @@
             method: 'POST',
             body: JSON.stringify({ cnpj })
         });
-        const stockData = await response.json();
 
+        const stockData = await response.json();
         console.log(stockData);
         return stockData;
     }
@@ -20,7 +20,7 @@
         total = parseInt(total);
 
         const breadcrumbItems = document.querySelectorAll('.breadcrumb li');
-        const cnpjItem = [...breadcrumbItems].find(item => item.textContent.includes('0001'));
+        const cnpjItem = [...breadcrumbItems].find(item => item.textContent.includes('000'));
         const cnpj = cnpjItem.textContent;
 
         fetchStock(cnpj);
